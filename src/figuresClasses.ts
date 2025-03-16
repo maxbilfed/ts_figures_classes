@@ -14,7 +14,7 @@ export class Triangle implements Figure {
     public sideC: number,
   ) {
     if (sideA <= 0 || sideB <= 0 || sideC <= 0) {
-      throw new Error('Sides cant be lower than 0!');
+      throw new Error('Sides of a triangle must greater than 0!');
     }
 
     const sides = [sideA, sideB, sideC];
@@ -23,19 +23,25 @@ export class Triangle implements Figure {
     sides.splice(sides.indexOf(longestSide), 1);
 
     if (sides[0] + sides[1] <= longestSide) {
-      throw new Error(`Side "${longestSide}" is too long compared to others!`);
+      throw new Error(
+        `Sum of the smaller sides have to be greater than the longest side!`,
+      );
     }
   }
 
   getArea(): number {
     const semiP = (this.sideA + this.sideB + this.sideC) / 2;
 
-    return +Math.sqrt(
-      semiP *
-        (semiP - this.sideA) *
-        (semiP - this.sideB) *
-        (semiP - this.sideC),
-    ).toFixed(2);
+    return (
+      Math.floor(
+        Math.sqrt(
+          semiP *
+            (semiP - this.sideA) *
+            (semiP - this.sideB) *
+            (semiP - this.sideC),
+        ) * 100,
+      ) / 100
+    );
   }
 }
 
@@ -47,7 +53,7 @@ export class Circle implements Figure {
     public radius: number,
   ) {
     if (radius <= 0) {
-      throw new Error('Radius cant be lower than 0!');
+      throw new Error('Radius must be greater than 0!');
     }
   }
 
@@ -65,12 +71,12 @@ export class Rectangle implements Figure {
     public height: number,
   ) {
     if (width <= 0 || height <= 0) {
-      throw new Error('Sides cant be lower than 0!');
+      throw new Error('with and height must be greater than 0!');
     }
   }
 
   getArea(): number {
-    return +(this.width * this.height).toFixed(2);
+    return Math.floor(this.width * this.height * 100) / 100;
   }
 }
 
